@@ -11,24 +11,24 @@ int main(int argc, char* argv[])
 
 string toString(Student *student) {
 
-        string replaceComma = "\"\"";
+        string replace = "\"\"";
 
         // Check Student name for commas
         for (int i = 0; i < student->name.length(); i++)
         {
                 if (student->name[i] == '"')
                 {
-                        student->name.replace(i, 1, replaceComma);
+                        student->name.replace(i, 1, replace);
                         i += 2;
                 }
         }
 
         // Check Student ID for commas
-        for (int i = 0; i < student->usfID.length(); i++)
+        for (int i = 0; i < student->usf_id.length(); i++)
         {
-                if (student->usfID[i] == '"')
+                if (student->usf_id[i] == '"')
                 {
-                        student->usfID.replace(i, 1, replaceComma);
+                        student->usf_id.replace(i, 1, replace);
                         i += 2;
                 }
         }
@@ -38,12 +38,12 @@ string toString(Student *student) {
         {
                 if (student->email[i] == '"')
                 {
-                        student->email.replace(i, 1, replaceComma);
+                        student->email.replace(i, 1, replace);
                         i += 2;
                 }
         }
 
-        string csvString = "\"" + student->name + "\", \"" + student->usfID + "\", \"" + student->email + "\", \"" + to_string(student->gradeOfPresentation) + "\", \"" + to_string(student->gradeOfEssay1) + "\", \"" + to_string(student->gradeOfEssay2) + "\", \"" + to_string(student->gradeofTermProject) + "\"";
+        string csvString = "\"" + student->name + "\", \"" + student->usf_id + "\", \"" + student->email + "\", \"" + to_string(student->grade_presentation) + "\", \"" + to_string(student->grade_essay1) + "\", \"" + to_string(student->grade_essay2) + "\", \"" + to_string(student->grade_termProject) + "\"";
 
         //string stringTesting = "Student Name: " + student->name + "," + "USF ID: " + student->usfID+ "," + "Email: " + student->email + "," + "Grade of presentation: " + student->gradeOfPresentation + "," + "Grade of Essay No. 1: " + student->gradeOfEssay1 + "," + "Grade of Essay No. 2: " + student->gradeOfEssay2 + "," + "Grade of the term project: " + student->gradeofTermProject;
         return(csvString);
