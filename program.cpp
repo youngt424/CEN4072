@@ -13,7 +13,6 @@ string toString(Student *student) {
 
         string replace = "\"\"";
 
-        // Check Student name for commas
         for (int i = 0; i < student->name.length(); i++)
         {
                 if (student->name[i] == '"')
@@ -23,7 +22,6 @@ string toString(Student *student) {
                 }
         }
 
-        // Check Student ID for commas
         for (int i = 0; i < student->usf_id.length(); i++)
         {
                 if (student->usf_id[i] == '"')
@@ -33,7 +31,6 @@ string toString(Student *student) {
                 }
         }
 
-        // Check Student email for commas
         for (int i = 0; i < student->email.length(); i++)
         {
                 if (student->email[i] == '"')
