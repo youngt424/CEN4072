@@ -1,4 +1,4 @@
-studentRecord.o: Student.cpp
+Student.o: Student.cpp
 	g++ -Wall -c -std=c++11 Student.cpp -o build/Student.o
 
 studentDao.o: studentDao.cpp
