@@ -1,11 +1,3 @@
-//
-//  main.cpp
-//  Student Directory
-//
-//  Created by Rechee Jozil on 8/31/16.
-//  Copyright © 2016 Rechee Jozil. All rights reserved.
-//
-
 #include <iostream>
 
 using namespace std;
