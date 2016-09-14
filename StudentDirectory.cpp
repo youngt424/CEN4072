@@ -26,10 +26,12 @@ int main(int argc, const char * argv[]) {
                 
             case 2:
                //code to add
+				AddStudent();
                 break;
                 
             case 3:
                 //code to delete
+				DeleteStudent()
                 break;
                 
             case 4:
@@ -45,7 +47,7 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
-void AddVoter ()
+void AddStudent ()
 {
     string name;
     string email;
@@ -77,7 +79,7 @@ void AddVoter ()
     cin >> teamGrade;
 }
 
-void DeleteVoter ()
+void DeleteStudent ()
 {
     cout << "Enter the UID of the student to be deleted";
 }
