@@ -86,14 +86,14 @@ int StudentDao::Count()
 	return 0;
 }
 
-void StudentDao::Create(StudentRecord* record)
+void StudentDao::Create(Student* record)
 {
 }
 StudentRecord* StudentDao::Read(int id)
 {
 	return NULL;
 }
-void StudentDao::Update(StudentRecord* record)
+void StudentDao::Update(Student* record)
 {
 }
 void StudentDao::Delete(int id)
