@@ -10,6 +10,8 @@ public:
 	
 	Student();
 	Student(string nm, string id, string emal, double g_presentation, double g_essay1, double g_essay2, double g_termProject);
+	Student(vector<string> stu_info);
+	string toString(Student *student);
 	~Student();
 	
 	string name;
