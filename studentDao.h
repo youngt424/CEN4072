@@ -4,14 +4,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "studentRecord.h"
+#include "Student.h"
 
 using namespace std;
 
 class StudentDao
 {
 	private:
-		vector<StudentRecord*> students;
+		vector<Student*> students;
 	
 	public:
 		StudentDao();
@@ -22,9 +22,9 @@ class StudentDao
 		
 		int Count();
 		
-		void Create(StudentRecord* record);
-		StudentRecord* Read(int id);
-		void Update(StudentRecord* record);
+		void Create(Student* record);
+		Student* Read(int id);
+		void Update(Student* record);
 		void Delete(int id);
 		
 		vector<int> Search(string keyword);
