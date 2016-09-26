@@ -142,6 +142,101 @@ void Student::getInput(bool isNew)
 			}
 		}
 	}
+	
+	if (isNew || promptToChange("the student's e-mail"))
+	{
+		valueSet = false;
+		while (!valueSet)
+		{
+			try
+			{
+				cout << "Enter the e-mail:\n";
+				getline(cin, line);
+				setEmail(line);
+				valueSet = true;
+			}
+			catch (char const* error)
+			{
+				cout << "Error: " << error << "\n";
+			}
+		}
+	}
+	
+	if (isNew || promptToChange("the student's presentation grade"))
+	{
+		valueSet = false;
+		while (!valueSet)
+		{
+			try
+			{
+				cout << "Enter the grade value between 0 to 1:\n";
+				getline(cin, line);
+				setGradePresentation(atof(line.c_str()));
+				valueSet = true;
+			}
+			catch (char const* error)
+			{
+				cout << "Error: " << error << "\n";
+			}
+		}
+	}
+	
+	if (isNew || promptToChange("the student's essay 1 grade"))
+	{
+		valueSet = false;
+		while (!valueSet)
+		{
+			try
+			{
+				cout << "Enter the grade value between 0 to 1:\n";
+				getline(cin, line);
+				setGradeEssay1(atof(line.c_str()));
+				valueSet = true;
+			}
+			catch (char const* error)
+			{
+				cout << "Error: " << error << "\n";
+			}
+		}
+	}
+	
+	if (isNew || promptToChange("the student's essay 2 grade"))
+	{
+		valueSet = false;
+		while (!valueSet)
+		{
+			try
+			{
+				cout << "Enter the grade value between 0 to 1:\n";
+				getline(cin, line);
+				setGradeEssay2(atof(line.c_str()));
+				valueSet = true;
+			}
+			catch (char const* error)
+			{
+				cout << "Error: " << error << "\n";
+			}
+		}
+	}
+	
+	if (isNew || promptToChange("the student's term project grade"))
+	{
+		valueSet = false;
+		while (!valueSet)
+		{
+			try
+			{
+				cout << "Enter the grade value between 0 to 1:\n";
+				getline(cin, line);
+				setGradeTermProject(atof(line.c_str()));
+				valueSet = true;
+			}
+			catch (char const* error)
+			{
+				cout << "Error: " << error << "\n";
+			}
+		}
+	}
 }
 
 void Student::getInput()
