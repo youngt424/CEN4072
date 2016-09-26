@@ -1,108 +1,118 @@
 #include "studentDao.h"
 
-vector<string> split(string str)
-{
-	vector<string> returnValue;
-	bool escaped = false, firstChar = true;
-	char c;
-	string cell;
-	
-	for (unsigned int index = 0; index < str.length(); index++)
-	{
-		c = str.at(index);
-		if (escaped)
-		{
-			if (c == '\"')
-			{
-				if (index + 1 < str.length() && str.at(index + 1) == '\"')
-				{
-					index++;
-					cell.append(1, '\"');
-				}
-				else
-				{
-					escaped = false;
-				}
-			}
-			else
-			{
-				cell.append(1, c);
-			}
-		}
-		else if (firstChar && c == '\"')
-		{
-			escaped = true;
-			firstChar = false;
-		}
-		else if (c == ',')
-		{
-			if (cell.length() > 0)
-			{
-				returnValue.push_back(cell.substr(0, cell.length()));
-				cell.clear();
-			}
-			else
-			{
-				returnValue.push_back("");
-			}
-			firstChar = true;
-		}
-		else
-		{
-			cell.append(1, c);
-			firstChar = false;
-		}
-	}
-
-	returnValue.push_back(cell.substr(0, cell.length()));
-
-	return returnValue;
-}
-
 StudentDao::StudentDao()
 {
+	oldLocationSet = false;
 }
+
 StudentDao::StudentDao(string location)
 {
-	ifstream file(location);
+	ifstream file(location.c_str());
 	string line;
 	
-	while (getline(file, line))
+	while (getline(file, line) && line.length())
 	{
-		
+		students.push_back(new Student(line));
 	}
+	
+	oldLocation = location;
+	oldLocationSet = true;
 }
 
-
-void StudentDao::Save()
+bool StudentDao::canSave()
 {
-}
-void StudentDao::SaveAs(string location)
-{
+	return oldLocationSet;
 }
 
-int StudentDao::Count()
+void StudentDao::save()
 {
-	return 0;
+	if (!oldLocationSet)
+	{
+		throw "Save location not set.";
+	}
+	
+	if (access(oldLocation.c_str(), F_OK) != -1)
+	{
+		remove(oldLocation.c_str());
+	}
+	
+	ofstream file;
+	file.open(oldLocation);
+	
+	for (unsigned int index = 0; index < students.size(); index++)
+	{
+		file << students.at(index)->toString() << "\n";
+	}
+	
+	file.close();
 }
 
-void StudentDao::Create(StudentRecord* record)
+void StudentDao::saveAs(string location)
 {
-}
-StudentRecord* StudentDao::Read(int id)
-{
-	return NULL;
-}
-void StudentDao::Update(StudentRecord* record)
-{
-}
-void StudentDao::Delete(int id)
-{
+	oldLocation = location;
+	oldLocationSet = true;
+	save();
 }
 
-vector<int> StudentDao::Search(string keyword)
+int StudentDao::count()
+{
+	return students.size();
+}
+
+void StudentDao::addRecord(Student* record)
+{
+	if (record == NULL)
+	{
+		throw "New student records cannot be NULL.";
+	}
+	
+	for (unsigned int index = 0; index < students.size(); index++)
+	{
+		if (students.at(index)->getUsfId().compare(record->getUsfId()) == 0)
+		{
+			throw "Duplicate USF ID.";
+		}
+	}
+	
+	students.push_back(record);
+}
+
+Student* StudentDao::readRecord(int index)
+{
+	return students.at(index);
+}
+
+int StudentDao::readRecord(string usfId)
+{
+	transform(usfId.begin(), usfId.end(), usfId.begin(), ::toupper);
+	
+	for (unsigned int index = 0; index < students.size(); index++)
+	{
+		if (students.at(index)->getUsfId().compare(usfId) == 0)
+		{
+			return index;
+		}
+	}
+	
+	return -1;
+}
+
+void StudentDao::deleteRecord(int index)
+{
+	students.erase(students.begin() + index);
+}
+
+vector<int> StudentDao::search(string keyword)
 {
 	vector<int> returnValue;
+	
+	for (unsigned int index = 0; index < students.size(); index++)
+	{
+		if (students.at(index)->search(keyword))
+		{
+			returnValue.push_back(index);
+		}
+	}
 	
 	return returnValue;
 }

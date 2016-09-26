@@ -1,47 +1,217 @@
 #include <iostream>
+#include <map>
 #include <string>
-#include "Student.h"
+#include "student.h"
+#include "studentDao.h"
 
 using namespace std;
 
-int main(int argc, char* argv[])
+typedef void (*OptionFunction)(void);
+
+map<char, OptionFunction> options;
+StudentDao* dao = NULL;
+bool keepRunning = true;
+char option;
+
+int getByUsfId()
 {
-	cout << "Hello World\n";
+	cout << "Enter the USF ID for the student:\n";
+	string usfId;
+	getline(cin, usfId);
+	
+	int returnValue = dao->readRecord(usfId);
+	
+	if (returnValue == -1)
+	{
+		cout << "No student was found.\n";
+	}
+	
+	return returnValue;
 }
 
-string toString(Student *student) {
+void addStudent()
+{
+	try
+	{
+		dao->addRecord(new Student());
+	}
+	catch (char const* error)
+	{
+		cout << "Error: " << error << "\n";
+	}
+}
+bool showAddStudent()
+{
+	cout << "\t" << option << ") Add Student\n";
+	options[option] = &addStudent;
+	option++;
+	return true;
+}
+void exitApp()
+{
+	keepRunning = false;
+}
+bool showExitApp()
+{
+	cout << "\t" << option << ") Exit\n";
+	options[option] = &exitApp;
+	option++;
+	return true;
+}
+void modifyStudent()
+{
+	int studentIndex = getByUsfId();
+	if (studentIndex == -1)
+	{
+		return;
+	}
+	Student* student = dao->readRecord(studentIndex);
+	student->getInput();
+}
+bool showModifyStudent()
+{
+	cout << "\t" << option << ") Modify Student\n";
+	options[option] = &modifyStudent;
+	option++;
+	return true;
+}
+void removeStudent()
+{
+	int studentIndex = getByUsfId();
+	if (studentIndex > -1)
+	{
+		dao->deleteRecord(studentIndex);
+	}
+}
+bool showRemoveStudent()
+{
+	cout << "\t" << option << ") Remove Student\n";
+	options[option] = &removeStudent;
+	option++;
+	return true;
+}
+void save()
+{
+	dao->save();
+}
+bool showSave()
+{
+	if (dao->canSave())
+	{
+		cout << "\t" << option << ") Save Database File\n";
+		options[option] = &save;
+		option++;
+		return true;
+	}
+	return false;
+}
+void saveAs()
+{
+	cout << "Enter the file path to save to:\n";
+	string file;
+	getline(cin, file);
+	dao->saveAs(file);
+}
+bool showSaveAs()
+{
+	cout << "\t" << option << ") Save Database File to Another Location\n";
+	options[option] = &saveAs;
+	option++;
+	return true;
+}
+void search()
+{
+	cout << "Enter the keyword to search for:\n";
+	string keyword;
+	getline(cin, keyword);
+	
+	vector<int> matches = dao->search(keyword);
+	
+	if (matches.size())
+	{
+		for (unsigned int index = 0; index < matches.size(); index++)
+		{
+			cout << "Match " << (index + 1) << ":\n";
+			Student* student = dao->readRecord(index);
+			student->print();
+		}
+	}
+	else
+	{
+		cout << "No matches\n";
+	}
+}
+bool showSearch()
+{
+	cout << "\t" << option << ") Search\n";
+	options[option] = &search;
+	option++;
+	return true;
+}
+void showAll()
+{
+	if (dao->count())
+	{
+		for (int index = 0; index < dao->count(); index++)
+		{
+			cout << "Student " << (index + 1) << ":\n";
+			Student* student = dao->readRecord(index);
+			student->print();
+		}
+	}
+	else
+	{
+		cout << "No student records.\n";
+	}
+}
+bool showShowAll()
+{
+	cout << "\t" << option << ") Show all Students\n";
+	options[option] = &showAll;
+	option++;
+	return true;
+}
+bool nextRequest()
+{
+	cout << "Please select an option:\n";
+	option = 'A';
+	options.clear();
+	
+	showAddStudent();
+	showExitApp();
+	showModifyStudent();
+	showRemoveStudent();
+	showSave();
+	showSaveAs();
+	showSearch();
+	showShowAll();
+	
+	string line;
+	getline(cin, line);
+	
+	char selectedOption = line.length() ? toupper(line[0]) : ' ';
+	
+	map<char, OptionFunction>::iterator match = options.find(selectedOption);
+	
+	if (match == options.end())
+	{
+		cout << "Bad Selection Try Again\n";
+	}
+	else
+	{
+		match->second();
+	}
+	
+	return keepRunning;
+}
 
-        string replace = "\"\"";
-
-        for (int i = 0; i < student->name.length(); i++)
-        {
-                if (student->name[i] == '"')
-                {
-                        student->name.replace(i, 1, replace);
-                        i += 2;
-                }
-        }
-
-        for (int i = 0; i < student->usf_id.length(); i++)
-        {
-                if (student->usf_id[i] == '"')
-                {
-                        student->usf_id.replace(i, 1, replace);
-                        i += 2;
-                }
-        }
-
-        for (int i = 0; i < student->email.length(); i++)
-        {
-                if (student->email[i] == '"')
-                {
-                        student->email.replace(i, 1, replace);
-                        i += 2;
-                }
-        }
-
-        string csvString = "\"" + student->name + "\", \"" + student->usf_id + "\", \"" + student->email + "\", \"" + to_string(student->grade_presentation) + "\", \"" + to_string(student->grade_essay1) + "\", \"" + to_string(student->grade_essay2) + "\", \"" + to_string(student->grade_termProject) + "\"";
-
-        //string stringTesting = "Student Name: " + student->name + "," + "USF ID: " + student->usfID+ "," + "Email: " + student->email + "," + "Grade of presentation: " + student->gradeOfPresentation + "," + "Grade of Essay No. 1: " + student->gradeOfEssay1 + "," + "Grade of Essay No. 2: " + student->gradeOfEssay2 + "," + "Grade of the term project: " + student->gradeofTermProject;
-        return(csvString);
+int main(int argc, char* argv[])
+{
+	dao = argc == 2 ? new StudentDao(argv[1]) : new StudentDao();
+	
+	cout << "Welcome to the Student Maintenance System\n\n";
+	
+	while (nextRequest())
+	{
+	}
 }

@@ -1,33 +1,40 @@
 #ifndef STUDENTDAO_H
 #define STUDENTDAO_H
 
+#include <algorithm>
+#include <fstream>
 #include <iostream>
+#include <stdio.h>
 #include <string>
+#include <unistd.h>
 #include <vector>
-#include "Student.h"
+#include "student.h"
 
 using namespace std;
 
 class StudentDao
 {
 	private:
+		bool oldLocationSet;
 		vector<Student*> students;
+		string oldLocation;
 	
 	public:
 		StudentDao();
 		StudentDao(string location);
 
-		void Save();
-		void SaveAs(string location);
+		bool canSave();
+		void save();
+		void saveAs(string location);
 		
-		int Count();
+		int count();
 		
-		void Create(Student* record);
-		Student* Read(int id);
-		void Update(Student* record);
-		void Delete(int id);
+		void addRecord(Student* record);
+		Student* readRecord(int index);
+		int readRecord(string usfId);
+		void deleteRecord(int index);
 		
-		vector<int> Search(string keyword);
+		vector<int> search(string keyword);
 };
 
 #endif

@@ -1,11 +1,12 @@
-studentRecord.o: Student.cpp
-	g++ -Wall -c -std=c++11 Student.cpp -o build/Student.o
+student.o: student.cpp student.h
+	g++ -Wall -c -std=c++11 student.cpp -o build/student.o
 
-studentDao.o: studentDao.cpp
+studentDao.o: studentDao.cpp studentDao.h student.o
 	g++ -Wall -c -std=c++11 studentDao.cpp -o build/studentDao.o
-	
-program.o: program.cpp
+
+program.o: program.cpp student.o studentDao.o
 	g++ -Wall -c -std=c++11 program.cpp -o build/program.o
 
-all : program.o studentDao.o Student.o
-	g++ -Wall build/program.o build/studentDao.o build/Student.o -o build/program
+all: program.o student.o studentDao.o
+	g++ -Wall build/program.o build/student.o build/studentDao.o -o build/program
+
