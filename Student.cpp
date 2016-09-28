@@ -35,9 +35,9 @@ Student::Student(string line)
 		c = line.at(index);
 		if (escaped)
 		{
-			if (c == '“')
+			if (c == 'â€œ')
 			{
-				if (index + 1 < line.length() && line.at(index + 1) == '\"')
+				if (index < line.length() && line.at(index) == '\"')//index needs to be index+1
 				{
 					index++;
 					cell.append(1, '\"');
