@@ -189,7 +189,7 @@ bool nextRequest()
 	string line;
 	getline(cin, line);
 	
-	char selectedOption = line.length() ? toupper(line[0]) : ' ';
+	char selectedOption = toupper(line[0]);
 	
 	map<char, OptionFunction>::iterator match = options.find(selectedOption);
 	
