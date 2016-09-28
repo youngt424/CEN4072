@@ -73,6 +73,12 @@ class StudentDao
 		Postcondition: a vector of indexes specifiing students that match the keyword search
 		*/
 		vector<int> search(string keyword);
+
+		/*
+		Precondition: None
+		Postcondition: returns a randomized hex string of length 24
+		*/
+		string genRandomHex();
 };
 
 #endif
