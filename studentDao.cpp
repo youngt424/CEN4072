@@ -19,6 +19,16 @@ StudentDao::StudentDao(string location)
 	oldLocationSet = true;
 }
 
+string StudentDao::genRandomHex()
+{
+	const char str[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+	stringstream hexValue;
+	for (int i = 0; i < 24; i++) {
+		hexValue << str[rand() % 16];
+	}
+	return hexValue.str();
+}
+
 bool StudentDao::canSave()
 {
 	return oldLocationSet;
@@ -30,14 +40,10 @@ void StudentDao::save()
 	{
 		throw "Save location not set.";
 	}
-	
-	if (access(oldLocation.c_str(), F_OK) != -1)
-	{
-		remove(oldLocation.c_str());
-	}
-	
+
+	string tempLocation = oldLocation + genRandomHex();
 	ofstream file;
-	file.open(oldLocation);
+	file.open(tempLocation);
 	
 	for (unsigned int index = 0; index < students.size(); index++)
 	{
@@ -45,6 +51,13 @@ void StudentDao::save()
 	}
 	
 	file.close();
+
+	if (access(oldLocation.c_str(), F_OK) != -1)
+	{
+		remove(oldLocation.c_str());
+	}
+
+	rename("tempLocation.txt", "oldLocation.txt");
 }
 
 void StudentDao::saveAs(string location)
