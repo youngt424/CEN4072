@@ -8,6 +8,7 @@
 #include <string>
 #include <unistd.h>
 #include <vector>
+#include <ctime>
 #include "student.h"
 
 using namespace std;
@@ -33,6 +34,7 @@ class StudentDao
 		Student* readRecord(int index);
 		int readRecord(string usfId);
 		void deleteRecord(int index);
+		string genRandomHex();
 		
 		vector<int> search(string keyword);
 };
