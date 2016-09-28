@@ -35,7 +35,7 @@ Student::Student(string line)
 		c = line.at(index);
 		if (escaped)
 		{
-			if (c == '\"')
+			if (c == '“')
 			{
 				if (index + 1 < line.length() && line.at(index + 1) == '\"')
 				{
