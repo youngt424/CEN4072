@@ -90,27 +90,24 @@ Student::Student(string line)
 
 bool Student::promptToChange(string fieldName)
 {
-    while (1)
-    {
-    cout << "Do you want to change " << fieldName << " (yes or no)?\n";
-	string line;
-	getline(cin, line);
-	transform(line.begin(), line.end(), line.begin(), ::toupper);
-    size_t results = line.find("YES");
-    if (line == "YES")
-    {
-        return true;
-    }
-    else if (line == "NO")
-    {
-        return false;
-    }
-    else
-    {
-        cout << "Invalid Entry\n";
-    }
-    }
-    //return results != string::npos;
+	while (1)
+	{
+		cout << "Do you want to change " << fieldName << " (yes or no)?\n";
+		string line;
+		getline(cin, line);
+		transform(line.begin(), line.end(), line.begin(), ::toupper);
+		size_t results = line.find("YES");
+		if (results != string::npos)
+		{
+			return true;
+		}
+		results = line.find("NO");
+		if (results != string::npos)
+		{
+			return false;
+		}
+		cout << "Invalid Entry\n";
+	}
 }
 
 void Student::getInput(bool isNew)
