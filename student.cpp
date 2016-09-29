@@ -107,7 +107,6 @@ void Student::getInput(bool isNew)
 	
 	if (isNew)
 	{
-		valueSet = false;
 		while (!valueSet)
 		{
 			try
@@ -145,7 +144,6 @@ void Student::getInput(bool isNew)
 	
 	if (isNew || promptToChange("the student's e-mail"))
 	{
-		valueSet = false;
 		while (!valueSet)
 		{
 			try
@@ -164,7 +162,6 @@ void Student::getInput(bool isNew)
 	
 	if (isNew || promptToChange("the student's presentation grade"))
 	{
-		valueSet = false;
 		while (!valueSet)
 		{
 			try
@@ -183,7 +180,6 @@ void Student::getInput(bool isNew)
 	
 	if (isNew || promptToChange("the student's essay 1 grade"))
 	{
-		valueSet = false;
 		while (!valueSet)
 		{
 			try
@@ -202,7 +198,6 @@ void Student::getInput(bool isNew)
 	
 	if (isNew || promptToChange("the student's essay 2 grade"))
 	{
-		valueSet = false;
 		while (!valueSet)
 		{
 			try
@@ -221,7 +216,6 @@ void Student::getInput(bool isNew)
 	
 	if (isNew || promptToChange("the student's term project grade"))
 	{
-		valueSet = false;
 		while (!valueSet)
 		{
 			try
