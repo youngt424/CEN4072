@@ -46,13 +46,13 @@ class StudentDao
 		
 		/*
 		Precondition: a student record 
-		Postcondition: the student information is saved to the dao
+		Postcondition: the given student information is added to the dao
 		*/
 		void addRecord(Student* record);
 		
 		/*
 		Precondition: an integer index of a student record in the dao
-		Postcondition: returns record of the student at the specified index in dao
+		Postcondition: returns record of the student at the specified index
 		*/
 		Student* readRecord(int index);
 		
