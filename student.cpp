@@ -125,7 +125,6 @@ void Student::getInput(bool isNew)
 	
 	if (isNew || promptToChange("the student's name"))
 	{
-		valueSet = false;
 		while (!valueSet)
 		{
 			try
