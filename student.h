@@ -36,6 +36,7 @@ class Student
 	public:
 		Student();
 		Student(string _name, string _usfId, string _email, double _gradePresentation, double _gradeEssay1, double _gradeEssay2, double _gradeTermProject);
+		//Student(string line) constructor initializes object with data in form "name, usfId, email, grade1, grade2, grade3, grade4
 		Student(string line);
 		
 		/*
