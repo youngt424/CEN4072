@@ -144,7 +144,7 @@ class Student
 		
 		/*
 		Precondition: an input number
-		Postcondition: sets student essay 1 grade to input number
+		Postcondition: sets student term project grade to input number
 		*/
 		void setGradeTermProject(double _gradeTermProject);
 
